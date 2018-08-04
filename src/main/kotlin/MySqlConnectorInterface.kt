@@ -16,7 +16,7 @@ interface MySqlConnectorInterface {
     fun connectToDBorCreateNewDB(databaseName: String, username: String, password: String)
     fun disconnectFromDB()
 
-    fun readLatestRow(tableName: String): ResultSet
+    fun queryToReadLatestRow(tableName: String): ResultSet
     fun readSpecificRow(tableName: String, rowNumber: Int): ResultSet
 
     fun getTimestamp(resultSet: ResultSet?): Timestamp

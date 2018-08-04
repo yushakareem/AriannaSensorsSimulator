@@ -83,12 +83,13 @@ class MySqlConnector: MySqlConnectorInterface {
 
     /**
      * Reads the latest row (by making the query) from the table in the database.
+     * Dont forget to do ResultSet.next() once you have the result set object.
      *
      * @param tableName  The <code>String</code> representing the table in the database.
      *
      * @return resultSet The <code>ResultSet Object</code> that holds the data read from the table.
      */
-    override fun readLatestRow(tableName: String): ResultSet {
+    override fun queryToReadLatestRow(tableName: String): ResultSet {
         try {
             val query = "select * from $tableName order by time desc limit 1"
             resultSet = statement.executeQuery(query)
@@ -100,6 +101,7 @@ class MySqlConnector: MySqlConnectorInterface {
 
     /**
      * Reads a specific row (by making the query) from the table in the database. Rows start from the number 0.
+     * Dont forget to do ResultSet.next() once you have the result set object.
      *
      * @param tableName  The <code>String</code> representing the table in the database.
      *
@@ -226,12 +228,13 @@ class MySqlConnector: MySqlConnectorInterface {
         }
 
         var numberOfRows = 0
-        try {
-            numberOfRows = resultSet!!.getInt("rows")
-        } catch (e: SQLException) {
-            println("MySQL getting Item TimeStamp/Value problem")
+        while (resultSet!!.next()) {
+            try {
+                numberOfRows = resultSet!!.getInt("rows")
+            } catch (e: SQLException) {
+                println("MySQL getting Item TimeStamp/Value problem")
+            }
         }
-
         return numberOfRows
     }
 

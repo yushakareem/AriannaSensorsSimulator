@@ -13,6 +13,7 @@ class AriannaSensorsSimulator {
             println("Begin of Read-Write")
 
             val sd = fromDatabase.readSpecificRow(tableName, i)
+
             while (sd.next()) {
                 try {
                     println(fromDatabase.getTimestamp(sd))
@@ -20,7 +21,7 @@ class AriannaSensorsSimulator {
 
                     val localTimeVal = Timestamp(System.currentTimeMillis()) //latest time
                     val localBoolVal = fromDatabase.getBooleanValue(sd) //Bool value
-                    toDatabase.setBooleanValue(tableName, localTimeVal, localBoolVal!!)
+                    toDatabase.setBooleanValue(tableName, localTimeVal, localBoolVal)
                 } catch (e: SQLException) {
                     println("MySQL getting Item TimeStamp/Value problem")
                 }
