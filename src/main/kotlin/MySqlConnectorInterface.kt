@@ -1,22 +1,12 @@
-import java.sql.Connection
 import java.sql.ResultSet
-import java.sql.Statement
 import java.sql.Timestamp
 
 interface MySqlConnectorInterface {
 
-    var connection: Connection
-    var statement: Statement
-    var resultSet: ResultSet?
-
-    var timestamp: Timestamp
-    var booleanValue: Boolean
-    var integerValue: Int
-
-    fun connectToDBorCreateNewDB(databaseName: String, username: String, password: String)
+    fun connectToDBorCreateNewDB()
     fun disconnectFromDB()
 
-    fun queryToReadLatestRow(tableName: String): ResultSet
+    fun readLatestRow(tableName: String): ResultSet
     fun readSpecificRow(tableName: String, rowNumber: Int): ResultSet
 
     fun getTimestamp(resultSet: ResultSet?): Timestamp
